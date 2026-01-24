@@ -2,7 +2,7 @@ name: Deploy Astro to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]       # 主分支
+    branches: [ "master" ]       # 主分支
 
 permissions:
   contents: read
