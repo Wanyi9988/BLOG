@@ -1,48 +1,182 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const base = import.meta.env.BASE_URL;
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 1080px;
+				max-width: calc(100% - 2em);
+				margin: 0 auto;
+				padding: 4rem 0 5rem;
+			}
+
+			.hero {
+				text-align: center;
+				padding: 2.25rem 1.5rem;
+				border: 1px solid rgba(201, 43, 0, 0.18);
+				border-radius: 16px;
+				background: rgba(255, 255, 255, 0.55);
+				box-shadow: var(--box-shadow);
+			}
+			.hero h1 {
+				margin: 0;
+				color: var(--accent);
+				font-size: 2.6rem;
+				letter-spacing: 0.02em;
+			}
+			.hero p {
+				margin: 0.75rem auto 0;
+				max-width: 58ch;
+				color: rgb(var(--gray-dark));
+				font-size: 1.2rem;
+				line-height: 1.8;
+			}
+			.cta {
+				margin-top: 1.25rem;
+				display: flex;
+				gap: 0.75rem;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+			.button {
+				display: inline-block;
+				padding: 0.7rem 1.05rem;
+				border-radius: 999px;
+				text-decoration: none;
+				border: 1px solid rgba(201, 43, 0, 0.35);
+				transition: 0.15s ease;
+			}
+			.button.primary {
+				background: var(--accent);
+				color: #fff;
+				border-color: var(--accent);
+			}
+			.button.secondary {
+				background: transparent;
+				color: var(--accent);
+			}
+			.button:hover {
+				transform: translateY(-1px);
+			}
+
+			.section-title {
+				margin: 2.5rem 0 1rem;
+				color: rgb(var(--gray-dark));
+				font-size: 1.25rem;
+				text-align: center;
+			}
+			.posts {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1rem;
+			}
+			.card {
+				display: flex;
+				flex-direction: column;
+				gap: 0.75rem;
+				padding: 1rem;
+				border-radius: 16px;
+				border: 1px solid rgba(15, 18, 25, 0.08);
+				background: rgba(255, 255, 255, 0.7);
+				text-decoration: none;
+				color: rgb(var(--gray-dark));
+				box-shadow: 0 8px 18px rgba(var(--black), 6%);
+				transition: 0.15s ease;
+				height: 100%;
+			}
+			.card:hover {
+				border-color: rgba(201, 43, 0, 0.35);
+				box-shadow: 0 12px 26px rgba(var(--black), 10%);
+				transform: translateY(-2px);
+			}
+			.card img {
+				border-radius: 12px;
+			}
+			.card .meta {
+				display: flex;
+				align-items: baseline;
+				justify-content: space-between;
+				gap: 0.75rem;
+				color: rgba(34, 41, 57, 0.75);
+				font-size: 0.95rem;
+			}
+			.card h3 {
+				margin: 0;
+				line-height: 1.25;
+				font-size: 1.25rem;
+				color: rgb(var(--gray-dark));
+			}
+			.card p {
+				margin: 0;
+				line-height: 1.7;
+				font-size: 1rem;
+				color: rgba(34, 41, 57, 0.85);
+			}
+
+			@media (max-width: 900px) {
+				.posts {
+					grid-template-columns: 1fr;
+				}
+				main {
+					padding: 2.5rem 0 4rem;
+				}
+				.hero h1 {
+					font-size: 2.2rem;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
+			<section class="hero">
+				<h1>{SITE_TITLE}</h1>
+				<p>
+					A lifelong learner, staying curious about everything.
+				</p>
+				<div class="cta">
+					<a class="button primary" href={`${base}blog`}>Read the blog</a>
+					<a class="button secondary" href={`${base}about`}>About me</a>
+				</div>
+			</section>
+
+			<h2 class="section-title">Latest posts</h2>
+			<ul class="posts">
+				{
+					posts.map((post) => (
+						<li>
+							<a class="card" href={`${base}blog/${post.id}/`}>
+								{post.data.heroImage && <Image width={720} height={360} src={post.data.heroImage} alt="" />}
+								<div class="meta">
+									<span>
+										<FormattedDate date={post.data.pubDate} />
+									</span>
+								</div>
+								<h3>{post.data.title}</h3>
+								{post.data.description && <p>{post.data.description}</p>}
+							</a>
+						</li>
+					))
+				}
 			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
 		</main>
 		<Footer />
 	</body>

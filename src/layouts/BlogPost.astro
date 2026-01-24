@@ -6,9 +6,25 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & {
+	/** Make the content container wider (useful for wide pages like About). */
+	wide?: boolean;
+	/** Use accent color for the title/date area. */
+	accentTitle?: boolean;
+	/** Hide the date block (useful for non-blog pages like About). */
+	showDate?: boolean;
+};
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const {
+	title,
+	description = '',
+	pubDate,
+	updatedDate,
+	heroImage,
+	wide,
+	accentTitle,
+	showDate = true,
+} = Astro.props as Props;
 ---
 
 <html lang="en">
@@ -36,11 +52,32 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				padding: 1em;
 				color: rgb(var(--gray-dark));
 			}
+			.prose.wide {
+				width: 980px;
+			}
+			@media (min-width: 1200px) {
+				.prose.wide {
+					width: 1080px;
+				}
+			}
 			.title {
 				margin-bottom: 1em;
 				padding: 1em 0;
 				text-align: center;
 				line-height: 1;
+			}
+			.title.accent {
+				color: var(--accent);
+			}
+			.title.accent h1 {
+				color: var(--accent);
+				font-size: 2.4em;
+			}
+			.title.accent .date {
+				color: var(--accent-dark);
+			}
+			.title.accent hr {
+				border-top-color: rgba(201, 43, 0, 0.25);
 			}
 			.title h1 {
 				margin: 0 0 0.5em 0;
@@ -62,18 +99,22 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				<div class="hero-image">
 					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
 				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
+				<div class:list={['prose', wide && 'wide']}>
+					<div class:list={['title', accentTitle && 'accent']}>
+						{
+							showDate && pubDate && (
+								<div class="date">
+									<FormattedDate date={pubDate} />
+									{
+										updatedDate && (
+											<div class="last-updated-on">
+												Last updated on <FormattedDate date={updatedDate} />
+											</div>
+										)
+									}
+								</div>
+							)
+						}
 						<h1>{title}</h1>
 						<hr />
 					</div>

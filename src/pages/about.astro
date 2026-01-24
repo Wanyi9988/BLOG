@@ -4,25 +4,35 @@ import Layout from '../layouts/BlogPost.astro';
 
 <Layout
 	title="About Me"
-	description="Personal background"
 	pubDate={new Date('January 24 2026')}
+	wide
+	accentTitle
+	showDate={false}
 >
-	<div class="about-content" style="font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;">
+	<div class="about-content">
 		<p>
-			2016–2020: Studied at Huazhong University of Science and Technology, School of Energy and Power Engineering, with the highest GPA in the major. Awards include national scholarships for three consecutive years, Outstanding Undergraduate, Excellent Graduate, and Best Graduation Thesis.
+			<span class="time">2016–2020</span>: Studied at Huazhong University of Science and Technology, School of Energy and Power Engineering, with the highest GPA in the major. Awards include national scholarships for three consecutive years, Outstanding Undergraduate, Excellent Graduate, and Best Graduation Thesis.
 		</p>
 
 		<p>
-			2020–2023: Admitted to Shanghai Jiao Tong University, School of Mechanical and Power Engineering. During this time, self-studied computer programming and interned at ByteDance.
+			<span class="time">2020–2023</span>: Admitted to Shanghai Jiao Tong University, School of Mechanical and Power Engineering. During this time, self-studied computer programming and interned at ByteDance.
 		</p>
 
 		<p>
-			2023–present: Working as a Java developer at Alibaba, focusing on backend development and software engineering.
+			<span class="time">2023–Present</span>: Working as a Java developer at Alibaba, focusing on e-commerce creative asset domain and AIGC application engineering.
 		</p>
 	</div>
 	<style>
-		.about-content p {
-			font-family: Helvetica, "Helvetica Neue", Arial, sans-serif !important;
+		.about-content {
+			font-size: 1.2rem;
+			line-height: 1.8;
+			max-width: 920px;
+			margin: 0 auto;
+		}
+		.about-content .time {
+			color: var(--accent);
+			font-weight: 700;
+			letter-spacing: 0.02em;
 		}
 	</style>
 </Layout>
