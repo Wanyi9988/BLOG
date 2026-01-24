@@ -20,7 +20,6 @@ const {
 	description = '',
 	pubDate,
 	updatedDate,
-	heroImage,
 	wide,
 	accentTitle,
 	showDate = true,
@@ -39,12 +38,7 @@ const {
 			.hero-image {
 				width: 100%;
 			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
+
 			.prose {
 				width: 720px;
 				max-width: calc(100% - 2em);
@@ -81,6 +75,8 @@ const {
 			}
 			.title h1 {
 				margin: 0 0 0.5em 0;
+				color: var(--accent);
+				font-size: 2.4em;
 			}
 			.date {
 				margin-bottom: 0.5em;
@@ -89,6 +85,34 @@ const {
 			.last-updated-on {
 				font-style: italic;
 			}
+
+			/* Markdown / rich-text headings inside the slot */
+			:global(.prose h1),
+			:global(.prose h2),
+			:global(.prose h3),
+			:global(.prose h4),
+			:global(.prose h5),
+			:global(.prose h6) {
+				color: var(--accent);
+			}
+			:global(.prose h1) {
+				font-size: 2.2em;
+			}
+			:global(.prose h2) {
+				font-size: 1.8em;
+			}
+			:global(.prose h3) {
+				font-size: 1.45em;
+			}
+			:global(.prose h4) {
+				font-size: 1.2em;
+			}
+			:global(.prose h5) {
+				font-size: 1.05em;
+			}
+			:global(.prose h6) {
+				font-size: 1em;
+			}
 		</style>
 	</head>
 
@@ -96,9 +120,6 @@ const {
 		<Header />
 		<main>
 			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
 				<div class:list={['prose', wide && 'wide']}>
 					<div class:list={['title', accentTitle && 'accent']}>
 						{
