@@ -47,20 +47,29 @@ h6 {
 	color: rgb(var(--black));
 	line-height: 1.2;
 }
-h1 {
-	font-size: 3.052em;
+.prose h1 {
+    font-size: 1em;        
+    margin: 0.8em 0 0.8em 0;   /* 上下间距：上 1em，下 1.5em */
 }
-h2 {
-	font-size: 2.441em;
+.prose h2 {
+    font-size: 1em;
+    margin: 0.8em 0 0.8em 0;
 }
-h3 {
-	font-size: 1.953em;
+.prose h3 {
+    font-size: 1em;
+    margin: 0.8em 0 0.8em 0;
 }
-h4 {
-	font-size: 1.563em;
+.prose h4 {
+    font-size: 1em;
+    margin: 0.7em 0 0.7em 0;
 }
-h5 {
-	font-size: 1.25em;
+.prose h5 {
+    font-size: 1em;
+    margin: 0.6em 0 0.86em 0;
+}
+.prose h6 {
+    font-size: 1em;
+    margin: 0.5em 0 0.5em 0;
 }
 strong,
 b {
@@ -73,6 +82,7 @@ a:hover {
 	color: var(--accent);
 }
 p {
+	font-size: 0.85em;
 	margin-bottom: 1em;
 }
 .prose p {
@@ -109,7 +119,7 @@ blockquote {
 	border-left: 4px solid var(--accent);
 	padding: 0 0 0 20px;
 	margin: 0;
-	font-size: 1.333em;
+	font-size: 0.88em;
 }
 hr {
 	border: none;
@@ -140,4 +150,24 @@ hr {
 	clip-path: inset(50%);
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+
+.prose ul {
+  padding-left: 1.8em; /* 整个列表左缩进 */
+}
+
+.prose li {
+  margin-bottom: 0.5em; /* 列表项间距 */
+  line-height: 1.5;
+  font-size: 0.85em;
+}
+
+.prose li::marker {
+  color: var(--accent); /* 符号颜色 */
+  font-size: 0.85em;       /* 符号大小 */
+}
+
+/* KaTeX / MathJax 公式统一字号 */
+.katex, .katex-display, .math {
+    font-size: 1em; /* 或 1.1em, 比正文大一点 */
 }
