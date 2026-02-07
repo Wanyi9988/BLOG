@@ -1,0 +1,190 @@
+---
+import Layout from '../layouts/BlogPost.astro';
+
+const contributions = [
+  {
+    project: 'LangChain4j',
+    repo: 'langchain4j/langchain4j',
+    domain: 'Java · LLM Infra · Agent Runtime',
+    items: [
+      {
+        title: 'fix(sql-filter-parser): handle Function expressions in WHERE clause',
+        link: 'https://github.com/langchain4j/langchain4j/pull/4170',
+        problem:
+          'SQL filter parser 在 WHERE 子句中无法正确处理函数表达式，导致复杂条件构造失败。',
+        work: [
+          '分析 parser 对 AST 结构的假设',
+          '补齐 Function expression 的处理分支',
+          '保持现有条件解析逻辑的向后兼容性'
+        ],
+        value:
+          '该问题会在 Agent 生成结构化查询时被放大，属于 infra 层的高风险静默失败点。'
+      },
+      {
+        title: 'fix(ai-service): append output format instructions to last TextContent',
+        link: 'https://github.com/langchain4j/langchain4j/pull/4184',
+        problem:
+          '在多段 TextContent 拼接场景下，模型输出格式指令可能被稀释或丢失。',
+        work: [
+          '调整 instruction 拼接顺序',
+          '确保 format instruction 始终位于最终上下文末尾'
+        ],
+        value:
+          '直接影响 LLM 输出的确定性，在 tool / structured output 场景中尤为关键。'
+      }
+    ]
+  },
+  {
+    project: 'Flowise',
+    repo: 'FlowiseAI/Flowise',
+    domain: 'LLM App · UI · UX Consistency',
+    items: [
+      {
+        title: 'fix: apply search filter to tools list view',
+        link: 'https://github.com/FlowiseAI/Flowise/pull/5487',
+        problem:
+          'Tools 页面在 list view 下搜索框失效，影响工具数量增多后的可用性。',
+        work: [
+          '定位 search filter 仅作用于 card view',
+          '统一 list / card 两种视图下的过滤逻辑'
+        ],
+        value:
+          '这是一个典型的 UI 行为不一致问题，会直接影响用户对系统可控性的判断。'
+      },
+      {
+        title:
+          'bug: Credential search box searches by credential type instead of user-defined name',
+        link: 'https://github.com/FlowiseAI/Flowise/issues/5485',
+        problem:
+          '搜索行为与用户心智不一致：用户输入的是自定义名称，系统却按 credential type 搜索。',
+        work: [
+          '明确搜索语义与用户 mental model 的偏差',
+          '提出以 user-defined name 作为 primary search key'
+        ],
+        value:
+          '这是工程实现与用户语义错位的典型案例，在 AI 工具中尤其致命。'
+      }
+    ]
+  }
+];
+---
+
+<Layout
+  title="Open Source Contributions"
+  pubDate={new Date('January 24 2026')}
+  wide
+  accentTitle
+  showDate={false}
+>
+  <section class="intro">
+    <p>
+      以下是我在开源项目中的一些问题驱动型贡献（problem-driven
+      contributions），主要集中在 LLM infra、Agent runtime 以及真实产品中的
+     行为一致性问题。
+    </p>
+  </section>
+
+  {contributions.map((group) => (
+    <section class="project">
+      <h2>{group.project}</h2>
+      <p class="meta">
+        <span>{group.domain}</span>
+        <span class="repo">{group.repo}</span>
+      </p>
+
+      {group.items.map((item) => (
+        <div class="contribution">
+          <h3>
+            <a href={item.link} target="_blank" rel="noopener noreferrer">
+              {item.title}
+            </a>
+          </h3>
+
+          <div class="block">
+            <strong>Problem</strong>
+            <p>{item.problem}</p>
+          </div>
+
+          <div class="block">
+            <strong>What I did</strong>
+            <ul>
+              {item.work.map((w) => (
+                <li>{w}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="block value">
+            <strong>Why it matters</strong>
+            <p>{item.value}</p>
+          </div>
+        </div>
+      ))}
+    </section>
+  ))}
+
+  <style>
+    .intro {
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      font-size: 1.15rem;
+      line-height: 1.8;
+      opacity: 0.9;
+    }
+
+    .project {
+      max-width: 900px;
+      margin: 0 auto 4rem;
+    }
+
+    .project h2 {
+      margin-bottom: 0.3rem;
+    }
+
+    .meta {
+      font-size: 0.95rem;
+      opacity: 0.7;
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .repo {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .contribution {
+      margin-bottom: 2.5rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--accent);
+    }
+
+    .contribution h3 {
+      margin-bottom: 0.8rem;
+      font-size: 1.3em
+    }
+
+    .contribution a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .block {
+      margin-bottom: 0.8rem;
+    }
+
+    .block strong {
+      display: block;
+      margin-bottom: 0.2rem;
+      color: var(--accent);
+    }
+
+    ul {
+      margin: 0.2rem 0 0.2rem 1.2rem;
+    }
+
+    .value {
+      opacity: 0.9;
+    }
+  </style>
+</Layout>
