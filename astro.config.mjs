@@ -5,15 +5,17 @@ import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import vercel from '@astrojs/vercel/static'
 
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  site: 'https://Wanyi9988.github.io', // 先写这个，后面解释
-  base: '/BLOG/',                     // 如果不是用户主页仓库
+  site: 'https://blog.winsome.cc',
+  base: '/',                    
   integrations: [mdx(), sitemap()],
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
   },
+  adapter: vercel(),
 });
