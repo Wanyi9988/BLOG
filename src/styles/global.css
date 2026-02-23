@@ -28,7 +28,7 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
-	font-size: 20px;
+	font-size: 16px;
 	line-height: 1.7;
 }
 main {
@@ -82,18 +82,18 @@ a:hover {
 	color: var(--accent);
 }
 p {
-	font-size: 0.85em;
+	font-size: 1em;
 	margin-bottom: 1em;
 }
 .prose p {
-	margin-bottom: 2em;
+	margin-bottom: 1em;
 }
 textarea {
 	width: 100%;
-	font-size: 16px;
+	font-size: 1em;
 }
 input {
-	font-size: 16px;
+	font-size: 1em;
 }
 table {
 	width: 100%;
@@ -121,7 +121,7 @@ blockquote {
 	border-left: 4px solid var(--accent);
 	padding: 0 0 0 20px;
 	margin: 0;
-	font-size: 0.88em;
+	font-size: 1em;
 }
 hr {
 	border: none;
@@ -129,7 +129,7 @@ hr {
 }
 @media (max-width: 720px) {
 	body {
-		font-size: 18px;
+		font-size: 1em;
 	}
 	main {
 		padding: 1em;
@@ -156,20 +156,26 @@ hr {
 
 .prose ul {
   padding-left: 1.8em; /* 整个列表左缩进 */
+  font-size: 1em;
+}
+
+.prose ol {
+  padding-left: 1.8em; /* 整个列表左缩进 */
+  font-size: 1em;
 }
 
 .prose li {
   margin-bottom: 0.5em; /* 列表项间距 */
   line-height: 1.5;
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 .prose li::marker {
   color: var(--accent); /* 符号颜色 */
-  font-size: 0.9em;       /* 符号大小 */
+  font-size: 1em;       /* 符号大小 */
 }
 
 /* KaTeX / MathJax 公式统一字号 */
 .katex, .katex-display, .math {
-    font-size: 1em; /* 或 1.1em, 比正文大一点 */
+    font-size: 1em; 
 }

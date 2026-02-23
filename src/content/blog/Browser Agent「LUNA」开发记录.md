@@ -1,7 +1,7 @@
 ---
 title: '「LUNA」开发记录'
 description: 'Browser Agent; ReAct Mode; Chrome Extension'
-pubDate: 2026-03-01
+pubDate: 2026-02-14
 ---
 
 # 形态设想
